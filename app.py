@@ -31,23 +31,26 @@ def get_order(order_id):
 
 @app.route("/fast-food-fast/api/v1/orders" , methods=['POST'])
 def create_orders():
-    if not request.json or not 'dish' in request.json:
-        abort(400)
+    order_id=len(orders)+1
     order = {
-        'id': orders[-1]['id'] + 1,
+        'id': order_id,
         'dish': request.json['dish'],
-        'price': request.json.get('price', 1200)
+        'price': request.json['price']
     }
-    order.append(orders)
+    orders.append(order)
     return jsonify({'task': order}), 201
 
 
-@app.route("/fast-food-fast/api/v1/orders" , methods=['PUT'])
-def update_orders():
-    pass
-@app.route("/fast-food-fast/api/v1/orders" , methods=['DELETE'])
-def delete_orders():
-    pass
+@app.route("/fast-food-fast/api/v1/orders/<int:order_id>" , methods=['PUT'])
+def update_orders(order_id):
+    order = [order for order in orders if order['id'] == order_id]
+    if len(order) == 0:
+        abort(404)
+    
+    order[0]['dish'] = request.json.get('dish', order[0]['dish'])
+    order[0]['price'] = request.json.get('price', order[0]['price'])
+    return jsonify({'order': order[0]}),201
+    
 
 
 if __name__ == '__main__':
