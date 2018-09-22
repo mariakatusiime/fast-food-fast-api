@@ -38,7 +38,7 @@ def create_orders():
         'price': request.json['price']
     }
     orders.append(order)
-    return jsonify({'task': order}), 201
+    return jsonify({'order': order}), 201
 
 
 @app.route("/fast-food-fast/api/v1/orders/<int:order_id>" , methods=['PUT'])
