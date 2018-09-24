@@ -5,7 +5,7 @@ python:
 - "3.7"
 cache: pip
 install: 
-- pip install -r requirements.txt
+- pip install --allow-all-external -r requirements.txt 
 script:
 - py.test --cov=.
 
