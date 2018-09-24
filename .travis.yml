@@ -14,5 +14,5 @@ script:
 after_success:
   - codecove
   - pytest
-  -coveralls
+  - coveralls
 
