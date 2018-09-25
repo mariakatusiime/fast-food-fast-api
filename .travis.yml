@@ -7,8 +7,8 @@ install:
 - sudo pip install codecov
 script:
 - py.test --cov=.
-- pip install python-coveralls
-- pip install coverage       # Add me to install coverage.py
+- sudo pip install python-coveralls
+- sudo pip install coverage       # Add me to install coverage.py
 - coverage erase
 - coverage run test_api.py && coverage html
 after_success:
