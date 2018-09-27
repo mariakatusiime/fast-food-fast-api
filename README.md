@@ -3,6 +3,10 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/mariakatusiime/fast-food-fast-api/badge.svg?branch=api)](https://coveralls.io/github/mariakatusiime/fast-food-fast-api?branch=api)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/8c4a78c0f19a376091b5/maintainability)](https://codeclimate.com/github/mariakatusiime/fast-food-fast-api/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/8c4a78c0f19a376091b5/test_coverage)](https://codeclimate.com/github/mariakatusiime/fast-food-fast-api/test_coverage)
+
 Fast-Food-Fast is a food delivery service app for a restaurant. Users can create an account and log in A user can be able to order for food The admin is able to add,edit or delete the fast-food items The admin is able to see a list of fast-food items The Admin user is able to See a list of orders,accept and decline orders,mark orders as completed A user is able to see a history of ordered food
 
 This has API end points for the orders made by clients.
