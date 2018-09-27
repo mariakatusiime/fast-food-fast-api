@@ -1,4 +1,3 @@
 [report]
-omit =
-    */test_api/*
+omit = "test_api.py"
 
