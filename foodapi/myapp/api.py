@@ -14,9 +14,9 @@ cus = CustomerOrders()
 cus.orders.append(order1)
 cus.orders.append(order2)          
 
-app.route("/")
+@app.route("/", methods=['GET'])
 def get_index():
-    return jsonify({'Hi there welcome to my app'}),200
+    return jsonify({'Hoolay':'Hi there welcome to my app'}),200
 @app.route("/fast-food-fast/api/v1/orders" , methods=['GET'])
 def get_orders():
     return jsonify({'orders':cus.orders}),200
@@ -51,7 +51,5 @@ def update_orders(order_id):
     order[0]['price'] = request.json.get('price', order[0]['price'])
     return jsonify({'order': order[0]}),201
     
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
