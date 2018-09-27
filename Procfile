@@ -1,1 +1,1 @@
-web: gunicorn foodapi.myapp.api:app
+web: gunicorn foodapi/myapp.api:app
