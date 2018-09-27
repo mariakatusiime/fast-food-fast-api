@@ -49,5 +49,7 @@ def update_orders(order_id):
     order[0]['price'] = request.json.get('price', order[0]['price'])
     return jsonify({'order': order[0]}),201
     
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
