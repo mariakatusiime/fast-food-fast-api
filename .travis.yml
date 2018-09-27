@@ -5,7 +5,7 @@ cache: pip
 install: 
 - sudo pip install -r requirements.txt 
 script:
-- py.test --cov=foodapi/myapp
+- py.test --cov=myapp
 after_success:
   - codecove
   - pytest
