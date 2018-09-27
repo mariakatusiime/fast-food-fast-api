@@ -4,13 +4,8 @@ python:
 cache: pip
 install: 
 - sudo pip install -r requirements.txt 
-- sudo pip install codecov
 script:
 - py.test --cov=.
-- sudo pip install python-coveralls
-- sudo pip install coverage       # Add me to install coverage.py
-- coverage erase
-- coverage run test_api.py && coverage html
 after_success:
   - codecove
   - pytest
