@@ -15,7 +15,7 @@ cus.orders.append(order1)
 cus.orders.append(order2)          
 
 app.route("/" , methods=['GET'])
-def get_orders():
+def get_index():
     return jsonify({'orders high there welcome to my app'}),200
 @app.route("/fast-food-fast/api/v1/orders" , methods=['GET'])
 def get_orders():
