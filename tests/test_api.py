@@ -21,7 +21,7 @@ class Testing(TestCase):
         order3 = {"dish":"mutton",
               "price":3400
              }
-        gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(order3))
+        gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= order3)
         self.assertEqual(gt.status_code,201)
     
     def test_update_order(self):
