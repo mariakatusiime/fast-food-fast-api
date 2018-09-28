@@ -4,13 +4,9 @@ from myapp.api import app
 
 
 class Testing(TestCase):
-
     def setUp(self):
         self.client=app.test_client
-         order3 = {"dish":"mutton",
-                  "price":3400
-                 }
-
+        
     def test_get_orders(self):
         
         gt=self.client().get('/fast-food-fast/api/v1/orders')
@@ -22,10 +18,14 @@ class Testing(TestCase):
         self.assertEqual(gt.data,b'{"order":{"dish":"fish","id":1,"price":1200}}\n')
 
     def test_create_order(self):
-        gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(order3)
+        order3 = {"dish":"mutton",
+              "price":3400
+             }
+        gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(order3))
         self.assertEqual(gt.status_code,201)
-
+    
     def test_update_order(self):
+        
         gt = self.client().put('/fast-food-fast/api/v1/orders/1',content_type='application/json', data = json.dumps(dict(id=1,dish="fish", price=1800)))
         self.assertEqual(gt.status_code,201)
 
