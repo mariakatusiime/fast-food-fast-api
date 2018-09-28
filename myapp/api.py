@@ -85,7 +85,7 @@ def create_orders():
     if checkdishname(dish) is not None:
         abort(409)
     if check_if_priceisnegative(price):
-        abort(501)
+        abort(400)
 
     
     order = {
