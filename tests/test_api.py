@@ -11,7 +11,7 @@ class Testing(TestCase):
         
         gt=self.client().get('/fast-food-fast/api/v1/orders')
         self.assertEqual(gt.status_code,200)
-        self.assertEqual(gt.data,b'{"orders":[{"dish":"fish","id":1,"price":1200},{"dish":"pork","id":2,"price":1500}]}\n')
+        self.assertEqual(gt.data,b'{"orders":[{"dish":"fish","id":1,"price":1200},{"dish":"pork","id":2,"price":1500},{"dish":"mutton","id":3,"price":3400}]}\n')
     def test_get_order(self):
         gt = self.client().get('/fast-food-fast/api/v1/orders/1')
         self.assertEqual(gt.status_code,200)
