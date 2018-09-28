@@ -33,7 +33,7 @@ class Testing(TestCase):
         self.assertEqual(gt.status_code,501)
     def test_if_check_for_zero_price(self):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(id=7,dish="milk",price= 0)))
-        self.assertEqual(gt.status_code,501)
+        self.assertEqual(gt.status_code,400)
     def test_if_check_for_string_in_place_of_price(self):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(id=8,dish="mutton",price="read")))
         self.assertEqual(gt.status_code,400)
