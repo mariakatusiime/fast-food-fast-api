@@ -32,10 +32,10 @@ class Testing(TestCase):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(id=6,dish="cake",price=-400)))
         self.assertEqual(gt.status_code,400)
     def test_if_check_for_zero_price(self):
-        gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(id=7,dish="milk",price= 0)))
+        gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(dish="milk",price= 0)))
         self.assertEqual(gt.status_code,400)
     def test_if_check_for_string_in_place_of_price(self):
-        gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(id=8,dish="mutton",price="read")))
+        gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(dish="mutton",price="read")))
         self.assertEqual(gt.status_code,400)
 
     def test_update_order(self):
@@ -43,7 +43,7 @@ class Testing(TestCase):
         self.assertEqual(gt.status_code,201)
 
     def test_update_order_for_unknown_order_id(self):
-        gt = self.client().put('/fast-food-fast/api/v1/orders/6',content_type='application/json', data = json.dumps(dict(id=6,dish="cake", price=2000)))
+        gt = self.client().put('/fast-food-fast/api/v1/orders/6',content_type='application/json', data = json.dumps(dict(dish="cake", price=2000)))
         self.assertEqual(gt.status_code,404)  
     
             
