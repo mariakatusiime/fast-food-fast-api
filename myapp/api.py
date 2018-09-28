@@ -70,13 +70,24 @@ def get_order(order_id):
 # make order endpoint
 @app.route("/fast-food-fast/api/v1/orders" , methods=['POST'])
 def create_orders():
-    if not request.json or 'dish' not in request.json or 'price' not in request.json :
-        abort(400)
-
-
-    order_id=len(cus.orders)+1
-    dish = request.json['dish']
-    price = request.json['price']
+    #if not request.json or 'dish' not in request.json or 'price' not in request.json:
+    #    abort(400)
+    
+    data = request.get_json()
+    order_id = len(cus.orders)+1
+    dish = data.get('dish')
+    price = data.get('price')
+    if dish:
+        pass
+    else:
+        return jsonify({'message':'Dish name is missing'})
+    if price:
+        pass
+    else:
+        return jsonify({'message':'Price is missing'})
+  
+    # dish = request.json['dish']
+    # price = request.json['price']
 
     if check_for_whitespaces(dish,price):
         abort(501)
