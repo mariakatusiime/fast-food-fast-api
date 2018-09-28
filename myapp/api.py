@@ -17,9 +17,6 @@ def bad_request(error):
 @app.errorhandler(501)
 def whitespaces_or_empty(error):
     return make_response(jsonify( { 'error': 'Whitespace or empty or string length is less than 3' } ), 501)
-@app.errorhandler(500)
-def whitespaces_or_empty(error):
-    return make_response(jsonify( { 'error': 'Negative or zero price' } ), 500)
 
 
 
@@ -88,7 +85,7 @@ def create_orders():
     if checkdishname(dish) is not None:
         abort(409)
     if check_if_priceisnegative(price):
-        abort(500)
+        abort(501)
 
     
     order = {
