@@ -17,6 +17,10 @@ def bad_request(error):
 @app.errorhandler(501)
 def whitespaces_or_empty(error):
     return make_response(jsonify( { 'error': 'Whitespace or empty or string length is less than 3' } ), 501)
+@app.errorhandler(500)
+def whitespaces_or_empty(error):
+    return make_response(jsonify( { 'error': 'Negative or zero price' } ), 500)
+
 
 
 #initialising some orders
@@ -43,7 +47,9 @@ def check_for_whitespaces(dish, price):
         return True
     if len(dish)<3:
         return True
-
+def check_if_priceisnegative(price):
+    if price <= 0:
+        return True
 #home endpoint
 @app.route("/", methods=['GET'])
 def get_index():
@@ -81,6 +87,8 @@ def create_orders():
         abort(400)
     if checkdishname(dish) is not None:
         abort(409)
+    if check_if_priceisnegative(price):
+        abort(500)
 
     
     order = {
@@ -104,6 +112,7 @@ def update_orders(order_id):
  
     order[0]['dish'] = request.json.get('dish', order[0]['dish'])
     order[0]['price'] = request.json.get('price', order[0]['price'])
+    
     if check_for_whitespaces(order[0]['dish'],order[0]['dish']):
         abort(501)
     if checkdatatypes(order[0]['dish'],order[0]['price']):
