@@ -22,7 +22,6 @@ class Testing(TestCase):
     def test_create_order(self):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data = json.dumps({"id":3,"dish":"mutton","price":3400}))
         self.assertEqual(gt.status_code,201)
-
     def test_created_order_already_exist(self):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data = json.dumps(dict(id=4,dish="fish",price=3400)))
         self.assertEqual(gt.status_code,409)
