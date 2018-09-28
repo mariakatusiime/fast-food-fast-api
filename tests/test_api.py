@@ -1,12 +1,12 @@
 from unittest import TestCase
 from flask import json
 from myapp.api import app,cus
-from models.orders import CustomerOrders #joel
-# cus = CustomerOrders() #joel
+from models.orders import CustomerOrders 
+# cus = CustomerOrders() 
 
 class Testing(TestCase):
     def setUp(self):
-        self.client=app.test_client
+        self.client = app.test_client
         self.cus = CustomerOrders()
     def tearDown(self):
         cus.orders=[]
@@ -15,7 +15,7 @@ class Testing(TestCase):
 
         order1 = {"dish":"fish","id":1,"price":1200}
         # cus.orders.append(order1)
-        l1 = len(cus.orders)
+        l1 = len(cus.orders)    
         self.client().post('/fast-food-fast/api/v1/orders', data = json.dumps(order1), content_type='application/json')
         l2 = len(cus.orders)
         gt=self.client().get('/fast-food-fast/api/v1/orders')
@@ -54,12 +54,15 @@ class Testing(TestCase):
     def test_if_string_is_empty(self):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(id=5,dish="",price=3400)))
         self.assertEqual(gt.status_code,501)
+
     def test_if_check_for_negative_integer(self):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(id=6,dish="cake",price=-400)))
         self.assertEqual(gt.status_code,400)
+
     def test_if_check_for_zero_price(self):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(dish="milk",price= 0)))
         self.assertEqual(gt.status_code,400)
+
     def test_if_check_for_string_in_place_of_price(self):
         gt = self.client().post('/fast-food-fast/api/v1/orders', content_type='application/json',data= json.dumps(dict(dish="mutton",price="read")))
         self.assertEqual(gt.status_code,400)
