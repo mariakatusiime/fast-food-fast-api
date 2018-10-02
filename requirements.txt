@@ -20,7 +20,6 @@ more-itertools==4.3.0
 pluggy==0.7.1
 psycopg2==2.7.5
 py==1.6.0
-pylint==2.1.1
 pytest==3.8.0
 pytest-cov==2.6.0
 requests==2.19.1
