@@ -6,9 +6,7 @@ from models.usermodel import Users
 myapp = Flask(__name__)
 
 
-
-#userm = Users()
-orderm = CustomerOrders(1,'fish',1500,'pending',1)
+#order = self.orderm.get_order
 
 @myapp.route("/", methods = ['GET'])
 def index(self):
@@ -28,12 +26,20 @@ def user_login():
 
 @myapp.route("/users/orders/",methods=['GET'])
 def get_orders():
-    return jsonify({'orders':orderm.get_orders()})
+    order = request.json
+    ordem = CustomerOrders(order.get('dish'),order.get('price'),order.get('status'),order.get('user_id'))
+
+    return jsonify({'orders':ordem.get_orders()})
 
 
 @myapp.route("/users/orders/",methods=['POST'])
 def make_order():
-    pass
+    order = request.json
+    ordem = CustomerOrders(order.get('dish'),order.get('price'),order.get('status'),order.get('user_id'))
+
+
+    return jsonify({'order':ordem.create_orders()}), 201
+
 
 
 @myapp.route("/users/orders/<int:id>",methods=['GET'])
