@@ -1,5 +1,5 @@
 from controllers.db import Dbase
-from models.tables import Mytables
+from controllers.tables import Mytables
 class Users:
     def __init__(self,user_id,username,email,password):
         self.user_id = user_id 
