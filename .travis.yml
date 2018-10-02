@@ -5,3 +5,9 @@ python:
 cache: pip 
 install: 
 - sudo pip install -r requirements.txt
+script:
+- py.test --cov=views
+after_success:
+- codecove
+- pytest
+- coveralls
