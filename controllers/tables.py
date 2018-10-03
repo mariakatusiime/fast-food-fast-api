@@ -3,7 +3,7 @@ class Mytables:
     def __init__(self):
         self.cmds=('''
             CREATE TABLE IF NOT EXISTS USERS (
-            ID INT PRIMARY KEY    NOT NULL,
+            ID SERIAL  PRIMARY KEY  NOT NULL,
             USERNAME TEXT,
             EMAIL    VARCHAR(320) NOT NULL,
             PASSWORD VARCHAR(255)    NOT NULL
@@ -11,7 +11,7 @@ class Mytables:
 
             
             CREATE TABLE IF NOT EXISTS MENU (
-            ID INT PRIMARY KEY    NOT NULL,
+            ID  SERIAL PRIMARY KEY    NOT NULL,
             DISH VARCHAR(320)     NOT NULL,
             PRICE   FLOAT(6)      NOT NULL 
              );
@@ -25,7 +25,7 @@ class Mytables:
              );
 
             CREATE TABLE IF NOT EXISTS ADMIN_USERS(
-            ID INT PRIMARY KEY    NOT NULL,
+            ID SERIAL PRIMARY KEY    NOT NULL,
             USERNAME TEXT     NOT NULL,
             EMAIL   VARCHAR(320)      NOT NULL,
             PASSWORD  VARCHAR(255)    NOT NULL
