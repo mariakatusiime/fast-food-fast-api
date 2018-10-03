@@ -12,8 +12,8 @@ class Users:
         self.password = password
         
     def user_signup(self):
-        query = "INSERT INTO USERS(USERNAME,EMAIL,PASSWORD)VALUES('%s,%s,%s,%s)"
-        self.cur.execute(query,(self.username,self.email,self.password))
+        query = "INSERT INTO USERS(USERNAME,EMAIL,PASSWORD)VALUES(%s,%s,%s)"
+        self.cur.execute(query,(self.username,self.email,self.password,))
         user ={
             'username':self.username,
             'email'  : self.email,
@@ -23,15 +23,13 @@ class Users:
         return user
 
         #self.cur.close()
-
-    @classmethod
-    def user_login(cls,username,password):
+    def user_login(self,username,password):
         query = "SELECT EMAIL FROM USERS WHERE USERNAME=%s AND PASSWORD=%s"
-        cls.cur.execute(query,(username,password))
+        self.cur.execute(query,(username,password))
         user = {
             'Welcome':username
         }
-        cls.users.append(user)
+        self.users.append(user)
         return user
 
 
