@@ -4,9 +4,8 @@ python:
 cache: pip 
 install: 
 - sudo pip install -r requirements.txt
-- sudo pip install pytest-cov
 script:
-- py.test --cov=webapp
+- pytest --cov=webapp
 after_success:
 - codecove
 - pytest
