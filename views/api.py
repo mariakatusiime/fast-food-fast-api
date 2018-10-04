@@ -1,10 +1,13 @@
 from flask import Flask,jsonify,abort,make_response,request
+from flask_jwt_extended import (JWTManager,jwt_required,create_access_token,get_jwt_identity)
 from controllers.db import Dbase
 from models.ordermodel import CustomerOrders
 from models.usermodel import Users
 from models.menumodel import Menu
 
 myapp = Flask(__name__)
+myapp.config['JWT_SECRET_KEY'] = 'super_secret'
+jwt = JWTManager(myapp)
 
 
 #order = self.orderm.get_order
@@ -25,14 +28,21 @@ def user_signup():
 
 @myapp.route("/api/v2/auth/login/",methods=['POST'])
 def user_login():
+    if not request.is_json:
+        return jsonify({"message":"Your input is not json format"}),400
     log = request.json
     username =log.get('username')
     password =log.get('password')
+    if not username:
+        return jsonify({"message":"username parameter is missing"}),400
+    if not password:
+        return jsonify({"message":"password parameter is missing"}),400
     details = Users(log.get('username'),log.get('email'),log.get('password'))
     
     response = details.user_login(username,password)
+    access_token = create_access_token(identity=username)
     
-    return jsonify({'Successful':response}),200
+    return jsonify({'Successful':access_token}),200
 
 
 
@@ -44,6 +54,7 @@ def get_orders():
 
 
 @myapp.route("/api/v2/users/orders/",methods=['POST'])
+@jwt_required
 def make_order():
     order = request.json
     ordem = CustomerOrders(order.get('dish'),order.get('price'),order.get('status'),order.get('user_id'))
