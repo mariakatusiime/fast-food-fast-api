@@ -1,5 +1,5 @@
-from controllers.db import Dbase
-from controllers.tables import Mytables
+from webapp.controllers.db import Dbase
+from webapp.controllers.tables import Mytables
 class CustomerOrders:
     con = Dbase()
     cur = con.curs

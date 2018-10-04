@@ -6,7 +6,9 @@ class Mytables:
             ID SERIAL  PRIMARY KEY  NOT NULL,
             USERNAME TEXT,
             EMAIL    VARCHAR(320) NOT NULL,
-            PASSWORD VARCHAR(255)    NOT NULL
+            PASSWORD VARCHAR(255)    NOT NULL,
+            ROLE  BOOLEAN     NOT NULL
+
              );
 
             
@@ -22,14 +24,7 @@ class Mytables:
             PRICE   FLOAT(6)      NOT NULL,
             STATUS  VARCHAR(255)  NOT NULL,
             USER_ID  INT REFERENCES USERS(ID) NOT NULL
-             );
-
-            CREATE TABLE IF NOT EXISTS ADMIN_USERS(
-            ID SERIAL PRIMARY KEY    NOT NULL,
-            USERNAME TEXT     NOT NULL,
-            EMAIL   VARCHAR(320)      NOT NULL,
-            PASSWORD  VARCHAR(255)    NOT NULL
-             ) ; '''
+             ); '''
         )
     def create_tables(self):
         self.con = Dbase()

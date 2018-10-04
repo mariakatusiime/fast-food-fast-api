@@ -1,9 +1,9 @@
 from flask import Flask,jsonify,abort,make_response,request
 from flask_jwt_extended import (JWTManager,jwt_required,create_access_token,get_jwt_identity)
-from controllers.db import Dbase
-from models.ordermodel import CustomerOrders
-from models.usermodel import Users
-from models.menumodel import Menu
+from webapp.controllers.db import Dbase
+from webapp.models.ordermodel import CustomerOrders
+from webapp.models.usermodel import Users
+from webapp.models.menumodel import Menu
 
 myapp = Flask(__name__)
 myapp.config['JWT_SECRET_KEY'] = 'super_secret'
@@ -22,7 +22,7 @@ def user_signup():
     log = request.json
     details = Users(log.get('username'),log.get('email'),log.get('password'))
     response = details.user_signup()
-    return jsonify({'signup successful':response})
+    return jsonify({'Message':response})
 
 
 

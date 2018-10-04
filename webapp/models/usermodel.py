@@ -1,25 +1,34 @@
-from controllers.db import Dbase
-from controllers.tables import Mytables
+from webapp.controllers.db import Dbase
+from webapp.controllers.tables import Mytables
 class Users:
     con = Dbase()
     cur = con.curs
     users =[]
 
     def __init__(self,username,email,password):
-    
+
+        
         self.username = username
         self.email = email
         self.password = password
-        
+    #user and admin signup    
     def user_signup(self):
-        query = "INSERT INTO USERS(USERNAME,EMAIL,PASSWORD)VALUES(%s,%s,%s)"
-        self.cur.execute(query,(self.username,self.email,self.password,))
-        user ={
+        query ="SELECT * FROM USERS WHERE USERNAME = %s AND PASSWORD =%s"
+        self.cur.execute(query,(self.username,self.email))
+        if query:
+            return("user with username :{} or email: {} already exists"\
+                  .format(self.username,self.email)),409 
+
+        else:
+           query = "INSERT INTO USERS(USERNAME,EMAIL,PASSWORD,ROLE)VALUES(%s,%s,%s,%s) RETURNING id"
+           self.cur.execute(query,(self.username,self.email,self.password, False))
+           query = "UPDATE USERS SET ROLE=%s WHERE ID=%s"
+           self.cur.execute(query,( True,1))
+           user ={
             'username':self.username,
             'email'  : self.email,
             'password':self.password
-
-        }
+            }
         return user
 
         #self.cur.close()
