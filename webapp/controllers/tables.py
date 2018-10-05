@@ -22,6 +22,7 @@ class Mytables:
             ORDER_NO SERIAL PRIMARY KEY   NOT NULL,
             DISH VARCHAR(320)     NOT NULL,
             PRICE   FLOAT(6)      NOT NULL,
+            QUANTITY INT          NOT NULL,
             STATUS  VARCHAR(255)  NOT NULL,
             USER_ID  INT REFERENCES USERS(ID) NOT NULL
              ); '''

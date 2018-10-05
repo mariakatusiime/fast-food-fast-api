@@ -1,5 +1,5 @@
 from webapp.controllers.db import Dbase
-from webapp.controllers.tables import Mytables
+
 class CustomerOrders:
     con = Dbase()
     cur = con.curs
@@ -9,23 +9,33 @@ class CustomerOrders:
         
         self.dish = dish
         self.price = price
+
         self.status = status
         self.user_id = user_id
         
 
     # function that allows users to make orders
     
-    def create_orders(self):
-        query = "INSERT INTO ORDERS(DISH,PRICE,STATUS,USER_ID) VALUES (%s,%s,%s,%s)"
-           
-        self.cur.execute(query,(self.dish,self.price,self.status,self.user_id,))
-        order = {
+    def create_orders(self,quantity):
+        
+        query = "SELECT * FROM ORDERS WHERE USER_ID=%s"
+        self.cur.execute(query,(self.user_id,))
+        if query:
+            query1 = "UPDATE ORDERS SET QUANTITY= %s WHERE USER_ID = %s"
+            self.cur.execute(query1,(quantity+1,self.user_id))
             
-            'dish'  : self.dish,
-            'price'  :self.price,
-            'status' :self.status,
-            'user_id':self.user_id
-        }
+        else:   
+            query = "INSERT INTO ORDERS(DISH,PRICE,STATUS,USER_ID,QUANTINTY) VALUES (%s,%s,%s,%s,%s)"
+           
+            self.cur.execute(query,(self.dish,self.price,self.status,self.user_id,1))
+            order = {
+            
+                 'dish'  : self.dish,
+                 'price'  :self.price,
+                 'status' :self.status,
+                 'user_id':self.user_id,
+                 
+                    }
         self.orders.append(order)
         return order
         #self.cur.close()
