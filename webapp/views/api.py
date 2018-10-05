@@ -9,8 +9,39 @@ myapp = Flask(__name__)
 myapp.config['JWT_SECRET_KEY'] = 'super_secret'
 jwt = JWTManager(myapp)
 
+@myapp.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify( { 'error': 'Not found' } ), 404)
+@myapp.errorhandler(409)
+def already_exists(error):
+    return make_response(jsonify( { 'error': 'Already exists' } ), 409)
+@myapp.errorhandler(400)
+def bad_request(error):
+    return make_response(jsonify( { 'error': 'Bad request' } ), 400)
+@myapp.errorhandler(501)
+def whitespaces_or_empty(error):
+    return make_response(jsonify( { 'error': 'Whitespace or empty or string length is less than 3' } ), 501)
 
-#order = self.orderm.get_order
+
+
+#checking for the data types
+def checkdatatypes(dish,status,price):
+    if not isinstance(dish,str) or not isinstance(dish,str) or not isinstance(price, int):
+        return True
+
+#checking for white space and length
+def check_for_whitespaces(dish,status):
+    if dish.isspace() or status.isspace() :
+        return True   
+    if len(dish)<3:
+        return True
+def check_if_priceisnegative(price,quantity):
+    if price <= 0:
+        return True
+    if quantity <= 0:
+        return True
+
+
 
 @myapp.route("/", methods = ['GET'])
 def index():
@@ -66,9 +97,21 @@ def get_orders():
 @jwt_required
 def make_order():
     order = request.json
-    ordem = CustomerOrders(order.get('dish'),order.get('price'),order.get('status'),order.get('user_id'))
-    quantity = 1
-    response = ordem.create_orders(quantity)
+    dish = order.get('dish')
+    price = order.get('price')
+    quantity = order.get('quantity')
+    status = order.get('status')
+
+    if not request.is_json:
+        return jsonify({"message":"Your input is not json format"}),400
+    if check_for_whitespaces(dish,status):
+        abort(501)
+    if checkdatatypes(dish,status,price):
+        abort(400)
+    if check_if_priceisnegative(price,quantity):
+        abort(400)
+    ordem = CustomerOrders(dish,price,quantity,status,order.get('user_id'))
+    response = ordem.create_orders()
     return jsonify({'order':response}), 201
 
 
@@ -82,14 +125,12 @@ def get_order(id):
     
 
 
-@myapp.route("/api/v2/users/orders/<int:id>",methods=['PUT'])
-def update_order_status(id):
+@myapp.route("/api/v2/users/orders/<int:order_no>",methods=['PUT'])
+def update_order_status(order_no):
     order = request.json
-    ordem = CustomerOrders(order.get('dish'),order.get('price'),order.get('status'),order.get('user_id'))
-    order_no = id
     status = order.get('status')
-    response = ordem.update_order_status(status,order_no)
-    return jsonify({'order':response}),201
+    ordem = CustomerOrders.update_order_status(status,order_no)
+    return jsonify({'order':ordem}),201
 
 
 @myapp.route("/api/v2/menu",methods=['GET'])

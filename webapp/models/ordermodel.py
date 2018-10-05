@@ -5,10 +5,11 @@ class CustomerOrders:
     cur = con.curs
     orders = []
 
-    def __init__(self, dish, price, status,user_id):
+    def __init__(self, dish, price,quantity, status,user_id):
         
         self.dish = dish
         self.price = price
+        self.quantity = quantity
 
         self.status = status
         self.user_id = user_id
@@ -16,34 +17,31 @@ class CustomerOrders:
 
     # function that allows users to make orders
     
-    def create_orders(self,quantity):
+    def create_orders(self):
         
-        query = "SELECT * FROM ORDERS WHERE USER_ID=%s"
-        self.cur.execute(query,(self.user_id,))
-        if query:
-            query1 = "UPDATE ORDERS SET QUANTITY= %s WHERE USER_ID = %s"
-            self.cur.execute(query1,(quantity+1,self.user_id))
-            
-        else:   
-            query = "INSERT INTO ORDERS(DISH,PRICE,STATUS,USER_ID,QUANTINTY) VALUES (%s,%s,%s,%s,%s)"
-           
-            self.cur.execute(query,(self.dish,self.price,self.status,self.user_id,1))
-            order = {
+        query = "INSERT INTO ORDERS(DISH,PRICE,STATUS,USER_ID,QUANTITY) VALUES (%s,%s,%s,%s,%s)"    
+        self.cur.execute(query,(self.dish,self.price,self.status,self.user_id,self.quantity))
+        query ="UPDATE ORDERS SET QUANTITY = %s WHERE USER_ID=%s"
+        self.cur.execute(query,(self.quantity+1,self.user_id))
+
+        order = {
             
                  'dish'  : self.dish,
                  'price'  :self.price,
+                 'quantity': self.quantity,
                  'status' :self.status,
                  'user_id':self.user_id,
                  
-                    }
+                }
         self.orders.append(order)
         return order
         #self.cur.close()
 
+
     # function that displays all orders to admin    
     @classmethod
     def get_orders(cls):
-        query = "SELECT ORDER_NO,DISH,PRICE,STATUS,USER_ID FROM ORDERS"
+        query = "SELECT ORDER_NO,DISH,PRICE,QUANTITY,STATUS,USER_ID FROM ORDERS"
         
         cls.cur.execute(query)
         orderlist = cls.cur.fetchall()
@@ -52,8 +50,9 @@ class CustomerOrders:
                 'ORDER_NO': orde[0],
                 'DISH'    : orde[1],
                 'PRICE'   : orde[2],
-                'STATUS'  : orde[3],
-                'USER_ID': orde[4]
+                'QUANTITY': orde[3],
+                'STATUS'  : orde[4],
+                'USER_ID': orde[5]
             }
             cls.orders.append(order)
         return cls.orders
@@ -63,6 +62,7 @@ class CustomerOrders:
         query = "SELECT DISH,PRICE,STATUS,USER_ID FROM ORDERS WHERE ORDER_NO =%s"
         cls.cur.execute(query, (order_no,))
         row = cls.cur.fetchone()
+        
         order = {
             'DISH': row[0],
             'PRICE': row[1],
@@ -73,18 +73,17 @@ class CustomerOrders:
         return order
 
     #function for updating a particular order status
-    
-    def update_order_status(self,status,order_no):
+    @classmethod
+    def update_order_status(cls,status,order_no):
+        
         query = "UPDATE ORDERS SET STATUS = %s WHERE ORDER_NO = %s "
-        self.cur.execute(query,(status,order_no,))
+        cls.cur.execute(query,(status,order_no))
+    
         order = {
             
-            'dish'  : self.dish,
-            'price'  :self.price,
-            'status' :self.status,
-            'user_id':self.user_id
+            'status' :status
         }
-        self.orders.append(order)
+        cls.orders.append(order)
         return order
  
         #cls.cur.close()
