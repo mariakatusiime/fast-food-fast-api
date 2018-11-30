@@ -56,7 +56,7 @@ def get_index():
 #get all orders endpoint
 @app.route("/fast-food-fast/api/v1/orders" , methods=['GET'])
 def get_orders():
-    return (cus.orders),200
+    return jsonify(cus.orders),200
     print (cus.orders)
 
 #get a specific order using its id
