@@ -66,7 +66,7 @@ def get_order(order_id):
     if len(order)==0:
         abort(404)
 
-    return jsonify({'order':order[0]}),200
+    return jsonify(order[0]),200
 
 # make order endpoint
 @app.route("/fast-food-fast/api/v1/orders" , methods=['POST'])
@@ -96,7 +96,7 @@ def create_orders():
     }
    
     cus.orders.append(order)
-    return jsonify({'order': order}), 201
+    return jsonify( order), 201
     
 #updating order endpoint
 @app.route("/fast-food-fast/api/v1/orders/<int:order_id>" , methods=['PUT'])
